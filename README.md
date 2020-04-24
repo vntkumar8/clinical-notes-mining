@@ -1,2 +1,4 @@
 # HealthCareAnalytics
-Course Project
+Course Project for BM60130
+
+Mortality prediction using UCDs
