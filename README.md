@@ -1,4 +1,4 @@
 # HealthCareAnalytics
 Course Project for BM60130
 
-Mortality prediction using UCDs
+Mortality prediction using *UCD* Unstructured Clinical Descriptions
