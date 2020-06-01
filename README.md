@@ -1,5 +1,5 @@
 # HealthCareAnalytics
-Course Project for *BM60130*
+Course Project for **BM60130**
 
 Mortality prediction using Unstructured Clinical Descriptions 
 
