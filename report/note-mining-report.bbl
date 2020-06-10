@@ -1,0 +1,88 @@
+\begin{thebibliography}{11}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Churpek et~al.(2016)Churpek, Yuen, Winslow, Meltzer, Kattan, and
+  Edelson]{churpek2016multicenter}
+Matthew~M Churpek, Trevor~C Yuen, Christopher Winslow, David~O Meltzer,
+  Michael~W Kattan, and Dana~P Edelson.
+\newblock Multicenter comparison of machine learning methods and conventional
+  regression for predicting clinical deterioration on the wards.
+\newblock \emph{Critical care medicine}, 44\penalty0 (2):\penalty0 368, 2016.
+
+\bibitem[Duda et~al.(2000)Duda, Hart, and Stork]{DudaHart2nd}
+R.~O. Duda, P.~E. Hart, and D.~G. Stork.
+\newblock \emph{Pattern Classification}.
+\newblock John Wiley and Sons, 2nd edition, 2000.
+
+\bibitem[Gehrmann et~al.(2017)Gehrmann, Dernoncourt, Li, Carlson, Wu, Welt,
+  Foote~Jr, Moseley, Grant, Tyler, et~al.]{gehrmann2017comparing}
+Sebastian Gehrmann, Franck Dernoncourt, Yeran Li, Eric~T Carlson, Joy~T Wu,
+  Jonathan Welt, John Foote~Jr, Edward~T Moseley, David~W Grant, Patrick~D
+  Tyler, et~al.
+\newblock Comparing rule-based and deep learning models for patient
+  phenotyping.
+\newblock \emph{arXiv preprint arXiv:1703.08705}, 2017.
+
+\bibitem[Johnson et~al.(2016)Johnson, Pollard, Shen, Li-wei, Feng, Ghassemi,
+  Moody, Szolovits, Celi, and Mark]{johnson2016mimic}
+Alistair~EW Johnson, Tom~J Pollard, Lu~Shen, H~Lehman Li-wei, Mengling Feng,
+  Mohammad Ghassemi, Benjamin Moody, Peter Szolovits, Leo~Anthony Celi, and
+  Roger~G Mark.
+\newblock Mimic-iii, a freely accessible critical care database.
+\newblock \emph{Scientific data}, 3:\penalty0 160035, 2016.
+
+\bibitem[Kaplan and Meier(1958)]{kaplan1958nonparametric}
+Edward~L Kaplan and Paul Meier.
+\newblock Nonparametric estimation from incomplete observations.
+\newblock \emph{Journal of the American statistical association}, 53\penalty0
+  (282):\penalty0 457--481, 1958.
+
+\bibitem[Metersky et~al.(2012)Metersky, Waterer, Nsa, and
+  Bratzler]{metersky2012predictors}
+Mark~L Metersky, Grant Waterer, Wato Nsa, and Dale~W Bratzler.
+\newblock Predictors of in-hospital vs postdischarge mortality in pneumonia.
+\newblock \emph{Chest}, 142\penalty0 (2):\penalty0 476--481, 2012.
+
+\bibitem[Miotto et~al.(2018)Miotto, Wang, Wang, Jiang, and
+  Dudley]{miotto2018deep}
+Riccardo Miotto, Fei Wang, Shuang Wang, Xiaoqian Jiang, and Joel~T Dudley.
+\newblock Deep learning for healthcare: review, opportunities and challenges.
+\newblock \emph{Briefings in bioinformatics}, 19\penalty0 (6):\penalty0
+  1236--1246, 2018.
+
+\bibitem[Rajkomar et~al.(2018)Rajkomar, Oren, Chen, Dai, Hajaj, Hardt, Liu,
+  Liu, Marcus, Sun, et~al.]{rajkomar2018scalable}
+Alvin Rajkomar, Eyal Oren, Kai Chen, Andrew~M Dai, Nissan Hajaj, Michaela
+  Hardt, Peter~J Liu, Xiaobing Liu, Jake Marcus, Mimi Sun, et~al.
+\newblock Scalable and accurate deep learning with electronic health records.
+\newblock \emph{NPJ Digital Medicine}, 1\penalty0 (1):\penalty0 18, 2018.
+
+\bibitem[Shin et~al.(2019)Shin, Hogan, Adams, Lynch, Patzer, and
+  Choi]{shin2019multimodal}
+Bonggun Shin, Julien Hogan, Andrew~B Adams, Raymond~J Lynch, Rachel~E Patzer,
+  and Jinho~D Choi.
+\newblock Multimodal ensemble approach to incorporate various types of clinical
+  notes for predicting readmission.
+\newblock In \emph{2019 IEEE EMBS International Conference on Biomedical \&
+  Health Informatics (BHI)}, pages 1--4. IEEE, 2019.
+
+\bibitem[Staff(2013)]{staff2013can}
+Michael Staff.
+\newblock Can data extraction from general practitioners’ electronic records
+  be used to predict clinical outcomes for patients with type 2 diabetes?
+\newblock \emph{Journal of Innovation in Health Informatics}, 20\penalty0
+  (2):\penalty0 95--102, 2013.
+
+\bibitem[Waudby-Smith et~al.(2018)Waudby-Smith, Tran, Dubin, and Lee]{Smith18}
+Ian E.~R. Waudby-Smith, Nam Tran, Joel~A. Dubin, and Joon Lee.
+\newblock Sentiment in nursing notes as an indicator of out-of-hospital
+  mortality in intensive care patients.
+\newblock \emph{PLOS ONE}, 13\penalty0 (6):\penalty0 1--11, 06 2018.
+\newblock \doi{10.1371/journal.pone.0198687}.
+\newblock URL \url{https://doi.org/10.1371/journal.pone.0198687}.
+
+\end{thebibliography}

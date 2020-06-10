@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: note-mining-report.aux
+The style file: plainnat.bst
+Database file #1: example.bib
+You've used 11 entries,
+            2773 wiz_defined-function locations,
+            674 strings with 7659 characters,
+and the built_in function-call counts, 6802 in all, are:
+= -- 553
+> -- 596
+< -- 3
++ -- 200
+- -- 189
+* -- 650
+:= -- 1100
+add.period$ -- 36
+call.type$ -- 11
+change.case$ -- 94
+chr.to.int$ -- 11
+cite$ -- 22
+duplicate$ -- 236
+empty$ -- 426
+format.name$ -- 202
+if$ -- 1366
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 12
+newline$ -- 65
+num.names$ -- 44
+pop$ -- 176
+preamble$ -- 1
+purify$ -- 83
+quote$ -- 0
+skip$ -- 201
+stack$ -- 0
+substring$ -- 186
+swap$ -- 18
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 116
+warning$ -- 0
+while$ -- 48
+width$ -- 0
+write$ -- 154

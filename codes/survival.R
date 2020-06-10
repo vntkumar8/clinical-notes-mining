@@ -1,0 +1,176 @@
+#====================================
+# Code for Preliminary Survival Analysis
+# Adapted from Sentiment in nursing notes as an 
+# indicator of out-of-hospital mortality in intensive care patients. PLOS ONE, 13(6):1–11, 06 2018.
+# doi: 10.1371/journal.pone.0198687. URL https://doi.org/10.1371/journal.pone.0198687.
+#====================================
+
+library(data.table)
+library(rms)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+library(xtable)
+library(caret)
+library(MLmetrics)
+library(PRROC)
+library(pROC)
+library(questionr)
+
+
+library(dplyr)
+library(data.table)
+library(survival)
+library(ggplot2)
+library(gridExtra)
+library(survminer)
+
+
+admissions_df <- read.csv("health-care/data/patients.csv")
+sapsii_df <- read.csv("health-care/data/sapsii-scores.csv")
+notes_df <- fread("health-care/data/notes_df_sntmnt.csv")
+
+notes_df <- notes_df %>% left_join(admissions_df, by="hadm_id")
+
+# Get the difference between the time of death and the time that the note was taken.
+# We don't want to look at notes close to death (~12hrs)
+
+deathtime.POSIX <- as.POSIXlt(strptime(notes_df$dod, "%Y-%m-%d %H:%M:%S"))
+charttime.POSIX <- as.POSIXlt(strptime(notes_df$charttime, "%Y-%m-%d %H:%M:%S"))
+setDT(notes_df)
+notes_df$death_chart_diffhrs <- difftime(deathtime.POSIX, 
+                                         charttime.POSIX, 
+                                         units="hours")
+
+
+notes_df <- notes_df[is.na(death_chart_diffhrs) | 
+                       death_chart_diffhrs > 12]
+
+notes_df <- notes_df[is.na(iserror)]
+
+analysis_df <- admissions_df
+
+setDT(analysis_df)
+analysis_df[dod != "",surv_time := difftime(as.Date(dod), as.Date(admittime), units="days")]
+# Remove patients with data entry error: death time recorded before admission.
+analysis_df <- analysis_df[is.na(surv_time) | surv_time >= 0]
+
+analysis_df[dod != "", surv_event := 1]
+
+# set discharge time and alive event for patients that have not died.
+analysis_df[dod == "" & dbsource == "metavision", 
+            surv_time := 90]
+analysis_df[dod == "" & dbsource == "carevue", 
+            surv_time := 365.242 * 4]
+analysis_df[dod == "", surv_event := 0]
+
+# Ensure that we are looking at a 4-year survival model 
+# (with censoring at 90 days for metavision)
+analysis_df[surv_time > 365.242 * 4, surv_event := 0]
+analysis_df[surv_time > 365.242 * 4, surv_time := 365.242 * 4]
+
+
+# A few hundred rows with unknown dbsource
+analysis_df <- analysis_df[!is.na(dbsource)]
+
+head(analysis_df[, c("dod", "surv_time", "surv_event", "dbsource"), with=FALSE],
+     n=15L)
+
+# have to make surv_time numeric for the Surv() function in the survival package
+analysis_df[, surv_time := as.numeric(surv_time)]
+
+notes_df <- notes_df %>% 
+  group_by(hadm_id) %>% 
+  summarize(mean_polarity = mean(polarity),
+            mean_subjectivity = mean(subjectivity))
+
+# joining notes by admission id.
+setDT(notes_df)
+setDT(analysis_df)
+analysis_df <- analysis_df %>% left_join(notes_df, by="hadm_id")
+
+
+setDT(sapsii_df)
+# joining SAPS II scores by ICU stay ID.
+analysis_df <- analysis_df %>% left_join(sapsii_df, by="icustay_id")
+
+analysis_df_w_pol <- analysis_df %>%
+  filter(!is.na(mean_polarity))
+```
+
+# Mean polarity and subjectivity quartiles
+
+```{r}
+output.folder <- "ppt/"
+
+gg_color_hue <- function(n) {
+  hues = seq(15, 375, length = n + 1)
+  hcl(h = hues, l = 65, c = 100)[1:n]
+}
+
+# 4 Groups
+# Polarity
+analysis_df_w_pol$Quartile <- factor(ntile(analysis_df_w_pol$mean_polarity, 4))
+quartiles <- levels(analysis_df_w_pol$Quartile)
+quartiles
+
+# Map quartiles to specific colors
+quartile.colors <- gg_color_hue(4)
+names(quartile.colors) <- quartiles
+
+
+surv.obj <- survfit(Surv(time = surv_time, event = surv_event) ~ Quartile, data=analysis_df_w_pol)
+
+pol.ggsurv.plot <- GGally::ggsurv(surv.obj, CI=F, cens.col = 2, lty.ci = 3) + 
+  xlab("Time (days)") + 
+  theme(text=element_text(size=8), axis.line.x = element_blank(),
+        axis.title.x = element_blank(), axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank()) + 
+  scale_y_continuous(breaks = seq(0.4, 1, by = 0.2), limits = c(0.4, 1)) +
+  guides(linetype = FALSE) + 
+  scale_colour_manual(name="Polarity      \nQuartile", 
+                      values = quartile.colors)
+
+# Log-rank test
+ggsurvplot(
+  surv.obj,                     # survfit object with calculated statistics.
+  pval = TRUE,             # show p-value of log-rank test.
+  #conf.int = TRUE,         # show confidence intervals for 
+  xlim = c(0,1500)        # present narrower X axis
+)
+
+# Subjectivity
+analysis_df_w_pol$Quartile <- factor(ntile(analysis_df_w_pol$mean_subjectivity, 4))
+levels(analysis_df_w_pol$Quartile)
+
+surv.obj <- survfit(Surv(time = surv_time, event = surv_event) ~ Quartile, data=analysis_df_w_pol)
+
+
+
+sub.ggsurv.plot <- GGally::ggsurv(surv.obj, CI=F, cens.col = 2, lty.ci = 3) + 
+  xlab("Time (days)") + 
+  theme(text=element_text(size=8)) + 
+  scale_y_continuous(breaks = seq(0.4, 1, by = 0.2), limits = c(0.4, 1)) +
+  guides(linetype = FALSE) +
+  scale_colour_manual(name="Subjectivity\nQuartile", 
+                      values = quartile.colors)
+
+# Log-rank test
+ggsurvplot(
+  surv.obj,                     # survfit object with calculated statistics.
+  risk.table = TRUE,       # show risk table.
+  pval = TRUE,             # show p-value of log-rank test.
+  conf.int =FALSE,         # show confidence intervals for 
+  # point estimaes of survival curves.
+  xlim = c(0,1500)        # present narrower X axis, but nsot affect
+)
+
+ggsurv.plot <- grid.arrange(pol.ggsurv.plot, sub.ggsurv.plot)
+
+ggsurv.plot
+
+ggsave(file.path(output.folder, "KM_curves.tiff"), plot = ggsurv.plot, 
+       width=15, height=10, units="cm", dpi=300) 
+
+```
+

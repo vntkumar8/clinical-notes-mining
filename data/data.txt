@@ -1,1 +1,2 @@
 According to MIMIC-III guidelines, data cannot be shared in public.
+We request users/interested people to look into https://mimic.physionet.org/gettingstarted/access/#request-access-to-mimic-iii for getting access.
